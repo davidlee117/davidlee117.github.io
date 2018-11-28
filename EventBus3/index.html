@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>EventBus 3总结 - My Docs</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="..">My Docs</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="..">知识库</a>
+                            </li>
+                            <li >
+                                <a href="../Anaconda/">Anaconda操作总结</a>
+                            </li>
+                            <li >
+                                <a href="../Android/">Android</a>
+                            </li>
+                            <li >
+                                <a href="../Android反射、动态代理与hook/">Android反射、动态代理与hook</a>
+                            </li>
+                            <li class="active">
+                                <a href="./">EventBus 3总结</a>
+                            </li>
+                            <li >
+                                <a href="../Java线程&进程/">线程</a>
+                            </li>
+                            <li >
+                                <a href="../MacOS/">MacOS操作总结</a>
+                            </li>
+                            <li >
+                                <a href="../linux/">linux</a>
+                            </li>
+                            <li >
+                                <a href="../互联网协议/">互联网协议</a>
+                            </li>
+                            <li >
+                                <a href="../编程范式/">编程范式</a>
+                            </li>
+                            <li >
+                                <a href="../设计模式/">设计模式</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../Android反射、动态代理与hook/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../Java线程&进程/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#eventbus-3">EventBus 3总结</a></li>
+        <li class="main "><a href="#_1">介绍</a></li>
+        <li class="main "><a href="#_2">使用</a></li>
+            <li><a href="#_3">简单使用</a></li>
+            <li><a href="#_8">传递线程</a></li>
+            <li><a href="#_9">优先级</a></li>
+            <li><a href="#_10">事件取消</a></li>
+            <li><a href="#_11">粘性事件</a></li>
+            <li><a href="#_12">订阅者索引</a></li>
+            <li><a href="#proguard">ProGuard</a></li>
+        <li class="main "><a href="#_13">参考</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="eventbus-3">EventBus 3总结</h1>
+<h1 id="_1">介绍</h1>
+<p>一个使用<code>发布者/订阅者模式</code>并且低耦合的Android开源库。</p>
+<p><img alt="eventbus_flow" src="../assets/eventbus_flow.png" /></p>
+<h1 id="_2">使用</h1>
+<h2 id="_3">简单使用</h2>
+<h3 id="gradle">使用gradle添加到工程</h3>
+<pre><code class="gradle">compile 'org.greenrobot:eventbus:3.1.1'
+</code></pre>
+
+<h3 id="_4">定义事件</h3>
+<p>事件是纯Java对象，没有其他的特殊要求</p>
+<pre><code class="java">public class MessageEvent {
+
+    public final String message;
+
+    public MessageEvent(String message) {
+        this.message = message;
+    }
+}
+</code></pre>
+
+<h3 id="_5">准备订阅者</h3>
+<pre><code class="java">@Subscribe(threadMode = ThreadMode.MAIN)
+public void onMessageEvent(MessageEvent event) {
+    doSomethingWith(event);
+}
+</code></pre>
+
+<h3 id="_6">注册订阅</h3>
+<pre><code class="java">@Override
+protected void onStart() {
+    super.onStart();
+    EventBus.getDefault().register(this);
+}
+@Override
+protected void onStop() {
+    super.onStop();
+    EventBus.getDefault().unregister(this);
+}
+</code></pre>
+
+<h3 id="_7">发布事件</h3>
+<pre><code class="java">EventBus.getDefault().post(new MessageEvent(&quot;Hello everyone!&quot;));
+</code></pre>
+
+<h2 id="_8">传递线程</h2>
+<h3 id="threadmode-posting">ThreadMode: POSTING</h3>
+<p>默认模式，事件的传递是同步完成的，发布者和订阅者在同一线程。这种模式下的事件处理方法必须快速返回，避免阻塞发布事件的线程。</p>
+<h3 id="threadmode-main">ThreadMode: MAIN</h3>
+<p>订阅者将在Android的主线程中调用。</p>
+<h3 id="threadmode-background">ThreadMode: BACKGROUND</h3>
+<p>订阅者将在后台线程中调用。如果发布线程不是主线程，事件处理程序方法将直接在发布线程中调用。 如果发布线程是主线程，EventBus使用单个后台线程来按顺序传递所有事件。 使用此模式的事件处理方法应尽快返回以避免阻塞后台线程。</p>
+<h3 id="threadmode-async">ThreadMode: ASYNC</h3>
+<p>事件处理方法在单独的线程中调用。</p>
+<h2 id="_9">优先级</h2>
+<p>在相同的传递线程（ThreadMode）中，较高优先级的订阅者将在其他优先级较低的订阅者之前接收事件。 默认优先级为0。 </p>
+<pre><code class="java">@Subscribe(priority = 1);
+public void onEvent(MessageEvent event) {
+    ...
+}
+</code></pre>
+
+<p><strong>注意：优先级不影响不同线程模式的订阅者之间的传递顺序！</strong></p>
+<h2 id="_10">事件取消</h2>
+<p>通过从订阅者的事件处理方法调用<code>cancelEventDelivery（Object event）</code>来取消事件传递过程。 任何其他活动传送将被取消，后续订阅者将不会收到活动。</p>
+<pre><code class="java">/ Called in the same thread (default)
+@Subscribe
+public void onEvent(MessageEvent event){
+    // Process the event
+    ...
+    // Prevent delivery to other subscribers
+    EventBus.getDefault().cancelEventDelivery(event) ;
+}
+</code></pre>
+
+<p><strong>事件通常由更高优先级的订阅者取消。 取消仅限于在发布线程（ThreadMode.PostThread）中运行的事件处理方法。</strong></p>
+<h2 id="_11">粘性事件</h2>
+<p>事件的订阅在事件发布之后
+下面表示，一个粘性事件发布了一段时间以前：</p>
+<pre><code class="java">EventBus.getDefault().postSticky(new MessageEvent(&quot;Hello everyone!&quot;));
+</code></pre>
+
+<p>现在一个新的活动开始。 在注册期间，所有粘性订阅者方法将立即获得先前发布的粘性事件：</p>
+<pre><code class="java">@Override
+public void onStart() {
+    super.onStart();
+    EventBus.getDefault().register(this);
+}
+
+@Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+public void onEvent(MessageEvent event) {
+    doSomethingWith(event);
+}
+
+@Override
+public void onStop() {
+    EventBus.getDefault().unregister(this);
+    super.onStop();
+}
+</code></pre>
+
+<p>最后一个粘性事件在注册时自动传递给匹配的订阅者, 需要移除（消费）粘性事件才能使得它们不再被递送。</p>
+<pre><code class="java">MessageEvent stickyEvent = EventBus.getDefault().getStickyEvent(MessageEvent.class);
+// Better check that an event was actually posted before
+if(stickyEvent != null) {
+    // &quot;Consume&quot; the sticky event
+    EventBus.getDefault().removeStickyEvent(stickyEvent);
+    // Now do something with it
+}
+</code></pre>
+
+<p>或者：</p>
+<pre><code class="java">MessageEvent stickyEvent = EventBus.getDefault().removeStickyEvent(MessageEvent.class);
+// Better check that an event was actually posted before
+if(stickyEvent != null) {
+    // Now do something with it
+}
+</code></pre>
+
+<h2 id="_12">订阅者索引</h2>
+<h2 id="proguard">ProGuard</h2>
+<p>在ProGuard配置文件（proguard.cfg）中使用以下规则以防止订阅者被删除。</p>
+<pre><code>-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe &lt;methods&gt;;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    &lt;init&gt;(java.lang.Throwable);
+}
+</code></pre>
+
+<h1 id="_13">参考</h1>
+<p><a href="http://blog.csdn.net/poorkick/article/details/55099311"><Android开源库> EventBus 用法详解&lt;译文&gt;</a></p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

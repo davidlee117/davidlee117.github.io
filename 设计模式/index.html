@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>设计模式 - My Docs</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="..">My Docs</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="..">知识库</a>
+                            </li>
+                            <li >
+                                <a href="../Anaconda/">Anaconda操作总结</a>
+                            </li>
+                            <li >
+                                <a href="../Android/">Android</a>
+                            </li>
+                            <li >
+                                <a href="../Android反射、动态代理与hook/">Android反射、动态代理与hook</a>
+                            </li>
+                            <li >
+                                <a href="../EventBus3/">EventBus 3总结</a>
+                            </li>
+                            <li >
+                                <a href="../Java线程&进程/">线程</a>
+                            </li>
+                            <li >
+                                <a href="../MacOS/">MacOS操作总结</a>
+                            </li>
+                            <li >
+                                <a href="../linux/">linux</a>
+                            </li>
+                            <li >
+                                <a href="../互联网协议/">互联网协议</a>
+                            </li>
+                            <li >
+                                <a href="../编程范式/">编程范式</a>
+                            </li>
+                            <li class="active">
+                                <a href="./">设计模式</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../编程范式/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="disabled">
+                                <a rel="prev" >
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#_1">设计模式</a></li>
+        <li class="main "><a href="#_2">构建模式</a></li>
+            <li><a href="#_3">定义</a></li>
+            <li><a href="#_4">场景</a></li>
+            <li><a href="#_5">实现</a></li>
+            <li><a href="#_6">杂谈</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="_1">设计模式</h1>
+<h1 id="_2">构建模式</h1>
+<h2 id="_3">定义</h2>
+<p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p>
+<h2 id="_4">场景</h2>
+<ol>
+<li>相同的方法，不同的执行顺序，产生不同的事件结果时；</li>
+<li>多个部件或零件，都可以装配到一个对象中，但是产生的运行结果又不相同时；</li>
+<li>产品类非常复杂，或者产品类中的调用顺序不同产生了不同的效能，这个时候使用建造者模式非常合适。</li>
+</ol>
+<h2 id="_5">实现</h2>
+<p>以开源库<code>Logger</code>为例</p>
+<pre><code class="java">FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(false)
+                .methodCount(0)
+                .methodOffset(5)
+                .tag(TAG)
+                .build();
+</code></pre>
+
+<p>具体实现</p>
+<pre><code class="java">public class PrettyFormatStrategy implements FormatStrategy {
+    private final int methodCount;
+    private final int methodOffset;
+    private final boolean showThreadInfo;
+    private final LogStrategy logStrategy;
+    private final String tag;
+
+    private PrettyFormatStrategy(Builder builder) {
+        methodCount = builder.methodCount;
+        methodOffset = builder.methodOffset;
+        showThreadInfo = builder.showThreadInfo;
+        logStrategy = builder.logStrategy;
+        tag = builder.tag;
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
+    //省略其他代码
+
+    public static class Builder {
+        int methodCount = 2;
+        int methodOffset = 0;
+        boolean showThreadInfo = true;
+        LogStrategy logStrategy;
+        String tag = &quot;PRETTY_LOGGER&quot;;
+
+        private Builder() {
+        }
+
+        public Builder methodCount(int val) {
+            methodCount = val;
+            return this;
+        }
+
+        public Builder methodOffset(int val) {
+            methodOffset = val;
+            return this;
+        }
+
+        public Builder showThreadInfo(boolean val) {
+            showThreadInfo = val;
+            return this;
+        }
+
+        public Builder logStrategy(LogStrategy val) {
+            logStrategy = val;
+            return this;
+        }
+
+        public Builder tag(String tag) {
+            this.tag = tag;
+            return this;
+        }
+
+        public PrettyFormatStrategy build() {
+            if (logStrategy == null) {
+                logStrategy = new LogcatLogStrategy();
+            }
+            return new PrettyFormatStrategy(this);
+        }
+  }
+}
+</code></pre>
+
+<h2 id="_6">杂谈</h2>
+<p>设置对象，可以通过构造方法传参、setter和builder，builder是对构造方法参数的封装。</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

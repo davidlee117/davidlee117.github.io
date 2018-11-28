@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Android反射、动态代理与hook - My Docs</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="..">My Docs</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="..">知识库</a>
+                            </li>
+                            <li >
+                                <a href="../Anaconda/">Anaconda操作总结</a>
+                            </li>
+                            <li >
+                                <a href="../Android/">Android</a>
+                            </li>
+                            <li class="active">
+                                <a href="./">Android反射、动态代理与hook</a>
+                            </li>
+                            <li >
+                                <a href="../EventBus3/">EventBus 3总结</a>
+                            </li>
+                            <li >
+                                <a href="../Java线程&进程/">线程</a>
+                            </li>
+                            <li >
+                                <a href="../MacOS/">MacOS操作总结</a>
+                            </li>
+                            <li >
+                                <a href="../linux/">linux</a>
+                            </li>
+                            <li >
+                                <a href="../互联网协议/">互联网协议</a>
+                            </li>
+                            <li >
+                                <a href="../编程范式/">编程范式</a>
+                            </li>
+                            <li >
+                                <a href="../设计模式/">设计模式</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../Android/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../EventBus3/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#androidhook">Android反射、动态代理与hook</a></li>
+            <li><a href="#joor">反射库joor</a></li>
+            <li><a href="#_2">动态代理</a></li>
+            <li><a href="#hook">hook</a></li>
+            <li><a href="#_3">参考</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="androidhook">Android反射、动态代理与hook</h1>
+<h2 id="joor">反射库joor</h2>
+<p><a href="https://github.com/jOOQ/jOOR">git地址：https://github.com/jOOQ/jOOR</a></p>
+<h3 id="_1">使用方法</h3>
+<p>使用gradle添加到工程</p>
+<pre><code class="gradle">implementation &quot;org.jooq:joor-java-6:0.9.7&quot;
+</code></pre>
+
+<p>获取Class对象</p>
+<pre><code class="java">Class fileClass = Reflect.on(&quot;java.io.File&quot;, classLoader).type();
+</code></pre>
+
+<p>创建实例</p>
+<pre><code class="java">File file = Reflect.on(File.class).create(&quot;/sdcard/temp0&quot;).get();
+</code></pre>
+
+<p>访问属性（public,protected,package,private均可）</p>
+<pre><code class="java">String path = Reflect.on(file).field(&quot;path&quot;).get();
+或者
+String path1 = Reflect.on(file).get(&quot;count&quot;);
+</code></pre>
+
+<p>修改属性(final属性也可以修改)</p>
+<pre><code class="java">String path = Reflect.on(file).set(&quot;path&quot;, &quot;/sdcard/temp1&quot;).get(&quot;path&quot;);
+</code></pre>
+
+<p>调用方法（public,protected,package,private均可）</p>
+<pre><code class="java"> boolean exists = Reflect.on(file).call(&quot;exists&quot;).get();
+</code></pre>
+
+<h2 id="_2">动态代理</h2>
+<p>接口实例化</p>
+<pre><code class="java">Class onClickListenerClass = Reflect.(View.OnClickListener.class).type();
+Object onClickListener = Proxy.newProxyInstance(classLoader, new Class[]{onClickListenerClass}, new InvocationHandler() {
+    @Override
+    public Object invoke(Object proxy, Method method, Obje[] args) throws Throwable {
+        String methodName = method.getName();
+        if (&quot;onClick&quot;.equals(methodName)) {
+            //doSomeThing...
+        }
+        return null;
+    }
+});
+button.setOnClickListener((View.OnClickListener)onClickListener);
+</code></pre>
+
+<h2 id="hook">hook</h2>
+<p>这里只介绍Java层级的hook，分为要root权限的系统级hook和免root权限的自身hook</p>
+<h3 id="xposedhook">Xposed，系统级hook</h3>
+<ol>
+<li>
+<p>运行环境搭建
+通过recovery刷入相应sdk的zip包，然后再安装管理app</p>
+</li>
+<li>
+<p>开发接入</p>
+</li>
+<li>
+<p>使用gradle添加到工程</p>
+</li>
+</ol>
+<pre><code class="gradle">compileOnly 'de.robv.android.xposed:api:82'
+//引入文档，方便查看
+compileOnly 'de.robv.android.xposed:api:82:sources'
+</code></pre>
+
+<ul>
+<li>配置Manifest.xml</li>
+</ul>
+<pre><code class="xml">&lt;meta-data
+    android:name=&quot;xposedmodule&quot;
+    android:value=&quot;true&quot; /&gt;
+&lt;meta-data
+    android:name=&quot;xposeddescription&quot;
+    android:value=&quot;hook test&quot; /&gt;
+&lt;meta-data
+    android:name=&quot;xposedminversion&quot;
+    android:value=&quot;53&quot; /&gt;
+</code></pre>
+
+<ul>
+<li>配置入口类
+在assets下新建文件xposed_init，内容为入口类路径</li>
+</ul>
+<pre><code class="txt">com.lee1219.xposed.Main
+</code></pre>
+
+<ul>
+<li>代码编写
+hook Activity</li>
+</ul>
+<pre><code class="java">XposedHelpers.findAndHookMethod(Activity.class, &quot;onCreate&quot;, Bundle.class, new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                super.beforeHookedMethod(param);
+                //Activity onCreate前
+                //获取当前对象
+                Activity activity = (Activity) param.thisObject;
+                //不执行方法体，直接返回
+                param.setResult(null);
+            }
+
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                super.afterHookedMethod(param);
+                //Activity onCreate后
+            }
+        });
+</code></pre>
+
+<h3 id="epic-hook">epic， 应用内hook</h3>
+<p>Epic是一个在虚拟机层面、以Java Method为粒度的 运行时 AOP Hook框架。简单来说，Epic 就是ART上的 Dexposed（支持 Android 4.0~9.0）。它可以拦截本进程内部几乎任意的Java方法调用，可用于实现AOP编程、运行时插桩、性能分析、安全审计等。</p>
+<p>使用方式参考Xposed</p>
+<h2 id="_3">参考</h2>
+<p><a href="https://droidyue.com/blog/2017/01/09/joor-examples/">一个事半功倍的Java反射库</a>
+<a href="https://www.jianshu.com/p/01a9e86581b9">Android 7.x 安装Xposed框架</a>
+<a href="https://github.com/tiann/epic/blob/master/README_cn.md">git地址：https://github.com/tiann/epic/blob/master/README_cn.md</a></p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
