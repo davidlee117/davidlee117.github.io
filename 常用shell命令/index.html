@@ -294,6 +294,34 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" title="显示当前目录下文件的大小" class="md-nav__link">
+    显示当前目录下文件的大小
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="显示当前目录的大小" class="md-nav__link">
+    显示当前目录的大小
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="查找文件" class="md-nav__link">
+    查找文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" title="显示当前目录文件数" class="md-nav__link">
+    显示当前目录文件数
+  </a>
+  
+</li>
+      
       
       
       
@@ -354,6 +382,34 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" title="显示当前目录下文件的大小" class="md-nav__link">
+    显示当前目录下文件的大小
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="显示当前目录的大小" class="md-nav__link">
+    显示当前目录的大小
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="查找文件" class="md-nav__link">
+    查找文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" title="显示当前目录文件数" class="md-nav__link">
+    显示当前目录文件数
+  </a>
+  
+</li>
+      
       
       
       
@@ -375,7 +431,26 @@
                 
                 <p><img alt="命令大全" src="../assets/shell_command_list.png" /></p>
 <h3 id="_1">批量文件重命名</h3>
-<p>rename 's/.txt/.java/' *     //把.txt 后缀的改成 .java后缀</p>
+<pre><code class="shell"># 把.txt 后缀的改成 .java后缀
+rename 's/.txt/.java/' *.txt
+</code></pre>
+
+<h3 id="_2">显示当前目录下文件的大小</h3>
+<pre><code class="shell">ls -lh
+</code></pre>
+
+<h3 id="_3">显示当前目录的大小</h3>
+<pre><code class="shell">du -sh
+</code></pre>
+
+<h3 id="_4">查找文件</h3>
+<pre><code class="shell"># 查找当前目录及其子目录下的txt文件
+find . -name '*.txt'
+</code></pre>
+
+<h3 id="_5">显示当前目录文件数</h3>
+<pre><code class="shell">ls |wc -l
+</code></pre>
                 
                   
                 
