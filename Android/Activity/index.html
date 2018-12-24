@@ -458,10 +458,10 @@
                 <h1 id="activity">Activity</h1>
 <h2 id="_1">生命周期</h2>
 <ol>
-<li>典型情况</li>
-</ol>
+<li>
+<p>典型情况</p>
 <p><img alt="activity lifecycle" src="../../assets/activity_lifecycle.png" /></p>
-<ol>
+</li>
 <li>
 <p>异常情况</p>
 <ol>
@@ -482,14 +482,57 @@
 
 -->
 
-<p><img alt="Activity" src="https://www.plantuml.com/plantuml/png/SoWkIImgAStDuUMoSamkoIpBBAcqvkNIjNlMqlzqoRHdpQrFsxO21Qpoyu8Jor8zyu3gyv9JWqiIIr8XmYwfnINvHI1D3gbvAK2J0000" title="Activity" /></p>
-<p><img alt="Activity-1" src="https://www.plantuml.com/plantuml/png/SoWkIImgAStDuUK2itYvTErUjlS-cxRXQSVifxjtMVDoMJacbsIMPPPKWjZvUSv5gOabgH1sK6fnINvHgcSUK6zUScfm2KJ68JKl1MWa0000" title="Activity-1" /></p>
+<p><img alt="Activity" src="https://www.plantuml.com/plantuml/png/SoWkIImgAStDuUMoSamkoIpBBAcqvkNIjNlMqlzqoRHdpQrFsxO21Qpoyu8Jor8zyu3gyv9JWqiIIr8XmYwfnINvHI1D3gbvAK2J0000" title="Activity" />
+<img alt="Activity-1" src="https://www.plantuml.com/plantuml/png/SoWkIImgAStDuUK2itYvTErUjlS-cxRXQSVifxjtMVDoMJacbsIMPPPKWjZvUSv5gOabgH1sK6fnINvHgcSUK6zUScfm2KJ68JKl1MWa0000" title="Activity-1" /></p>
 <p>资源相关的系统配置发生改变，常见于屏幕旋转，为了防止这种情况的Activity重新创建，可在相应Activity添加如下代码：</p>
 <pre><code class="xml">android:configChanges=&quot;orientation|screenSize&quot;
 </code></pre>
 
 <p>之后屏幕旋转，Activity不会重新创建，取而代之的是系统调用了Activity的onConfigurationChanged方法。</p>
 <h2 id="_2">启动模式</h2>
+<ol>
+<li>standard：标准模式
+默认模式，每次启动一个Activity都会创建一个新的实例。</li>
+<li>singleTop：栈顶复用模式
+如果新的Activity已位于任务栈的栈顶，那么此Activity不会被重新创建，同时它的onNewIntent会被调用。</li>
+<li>singleTask：栈类复用模式
+如果Activity在所需的任务栈中存在，那么此Activity不会被重新创建（不在栈顶则该Activity上的其它Activity出栈），同时它的onNewIntent会被调用；
+如果Activity所需的任务栈不存在，那么先创建该任务栈再创建该Activity。</li>
+<li>singleInstance：单实例模式
+增强的singleTask模式，具有此模式的Activity只能单独的位于一个任务栈中</li>
+</ol>
+<p>下面通过一个例子来说明它们的功能和区别：</p>
+<pre><code class="xml">&lt;activity
+    android:name=&quot;com.lee.test.MainActivity&quot;
+    android:configChanges=&quot;orientation|screenSize&quot;
+    android:launchMode=&quot;standard&quot;&gt;
+    &lt;intent-filter&gt;
+        &lt;action android:name=&quot;android.intent.action.MAIN&quot; /
+        &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
+    &lt;/intent-filter&gt;
+&lt;/activity
+&lt;activity
+    android:name=&quot;com.lee.test.SecondActivity&quot;
+    android:launchMode=&quot;singleTask&quot;
+    android:taskAffinity=&quot;com.lee.test1&quot;
+&lt;/activity
+&lt;activity
+    android:name=&quot;com.lee.test.ThirdActivity&quot;
+    android:launchMode=&quot;singleTask&quot;
+    android:taskAffinity=&quot;com.lee.test1&quot;
+&lt;/activity&gt;
+</code></pre>
+
+<p>实验流程：</p>
+<ol>
+<li>在MainActivity中单击按钮启动SecondActivity</li>
+<li>在SecondActivity中单击按钮启动ThirdActivity</li>
+<li>在ThirdActivity中单击按钮启动MainActivity</li>
+<li>最后再在MainActivity中单击按钮启动SecondActivity</li>
+<li>再按back键返回</li>
+</ol>
+<p>流程分析：
+<img alt="activity 分析" src="../../assets/android-activity-0.png" /></p>
 <h2 id="_3">参考</h2>
 <p>《Android开发艺术探索》</p>
                 
