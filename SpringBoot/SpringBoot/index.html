@@ -416,7 +416,14 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_1" title="参考" class="md-nav__link">
+  <a href="#_1" title="热部署" class="md-nav__link">
+    热部署
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -466,7 +473,14 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_1" title="参考" class="md-nav__link">
+  <a href="#_1" title="热部署" class="md-nav__link">
+    热部署
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -498,8 +512,6 @@
     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
     &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
     &lt;configuration&gt;
-        &lt;fork&gt;true&lt;/fork&gt;
-        &lt;addResources&gt;true&lt;/addResources&gt;
         &lt;executable&gt;true&lt;/executable&gt;
     &lt;/configuration&gt;
 &lt;/plugin&gt;
@@ -533,8 +545,45 @@ chomd 744 app.jar
 
 <p>默认的应用pid：/var/run/app/app.pid</p>
 <p>默认的日志目录：/var/log/app.log</p>
-<h2 id="_1">参考</h2>
-<p><a href="https://www.jianshu.com/p/563497a6e1a7">SpringBoot生成的jar包后台执行</a></p>
+<h2 id="_1">热部署</h2>
+<ol>
+<li>pom文件添加依赖</li>
+</ol>
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+    &lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<ol>
+<li>pom文件添加插件</li>
+</ol>
+<pre><code class="xml">&lt;plugin&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+    &lt;configuration&gt;
+        &lt;!--fork: 如果没有该项配置devtools不会起作用，即应用不会restart--&gt;
+        &lt;fork&gt;true&lt;/fork&gt;
+        &lt;!--支持静态文件热部署--&gt;
+        &lt;addResources&gt;true&lt;/addResources&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;
+</code></pre>
+
+<ol>
+<li>Intellij Idea中设置</li>
+</ol>
+<p><img alt="Intellij Idea中设置自动编译" src="../../assets/spring-boot/spring-boot-2-1.png" /></p>
+<ol>
+<li>Terminal中启动项目</li>
+</ol>
+<pre><code class="shell">mvn spring-boot:run
+</code></pre>
+
+<h2 id="_2">参考</h2>
+<p><a href="https://www.jianshu.com/p/563497a6e1a7">SpringBoot生成的jar包后台执行</a>
+<a href="https://www.jianshu.com/p/330052ebf52d">Intellij Idea Spring Boot 热部署</a></p>
                 
                   
                 
