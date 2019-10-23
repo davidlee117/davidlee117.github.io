@@ -205,6 +205,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../Java/" title="Java" class="md-nav__link">
+      Java
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../Java线程&进程/" title="线程" class="md-nav__link">
       线程
     </a>
@@ -310,6 +322,27 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_6" title="显示标准进程信息" class="md-nav__link">
+    显示标准进程信息
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" title="让进程在后台运行" class="md-nav__link">
+    让进程在后台运行
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" title="查看端口信息" class="md-nav__link">
+    查看端口信息
+  </a>
+  
+</li>
+      
       
       
       
@@ -318,6 +351,18 @@
   
 </nav>
     
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../经验总结/" title="经验总结" class="md-nav__link">
+      经验总结
+    </a>
   </li>
 
     
@@ -352,13 +397,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
     
-    <label class="md-nav__link" for="nav-11">
+    <label class="md-nav__link" for="nav-13">
       Android
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-11">
+      <label class="md-nav__title" for="nav-13">
         Android
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -406,6 +451,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../Android/Android权限/" title="Android权限" class="md-nav__link">
+      Android权限
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../Android/自定义View/" title="自定义View" class="md-nav__link">
       自定义View
     </a>
@@ -424,13 +481,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-14" type="checkbox" id="nav-14">
     
-    <label class="md-nav__link" for="nav-12">
+    <label class="md-nav__link" for="nav-14">
       SpringBoot
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-12">
+      <label class="md-nav__title" for="nav-14">
         SpringBoot
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -506,6 +563,27 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_6" title="显示标准进程信息" class="md-nav__link">
+    显示标准进程信息
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" title="让进程在后台运行" class="md-nav__link">
+    让进程在后台运行
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" title="查看端口信息" class="md-nav__link">
+    查看端口信息
+  </a>
+  
+</li>
+      
       
       
       
@@ -547,6 +625,30 @@ find . -name '*.txt'
 <h3 id="_5">显示当前目录文件数</h3>
 <pre><code class="shell">ls |wc -l
 </code></pre>
+
+<h3 id="_6">显示标准进程信息</h3>
+<pre><code class="shell">ps -ef
+</code></pre>
+
+<h3 id="_7">让进程在后台运行</h3>
+<pre><code class="shell"># 新建窗口并取个名字
+screen -S test
+# 在新窗口中运行程序
+java -jar test.jar
+# 在当前会话窗口中按Ctrl a + d快捷键可以实现分离，并回到主窗口
+# 列出窗口
+screen -ls
+# 恢复会话窗口
+screen -r 1234
+# 杀死会话窗口
+kill -9 1234
+# 清除死去的窗口
+screen -wipe
+</code></pre>
+
+<h3 id="_8">查看端口信息</h3>
+<pre><code class="shell">netstat -ntlp|grep 8888
+</code></pre>
                 
                   
                 
@@ -582,13 +684,13 @@ find . -name '*.txt'
           </a>
         
         
-          <a href="../编程范式/" title="编程范式" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../经验总结/" title="经验总结" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   前进
                 </span>
-                编程范式
+                经验总结
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

@@ -36,7 +36,7 @@
     
     
       
-        <title>互联网协议 - 知识库</title>
+        <title>Java - 知识库</title>
       
     
     
@@ -72,7 +72,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#_1" tabindex="1" class="md-skip">
+      <a href="#java" tabindex="1" class="md-skip">
         跳转至
       </a>
     
@@ -98,7 +98,7 @@
                 知识库
               </span>
               <span class="md-header-nav__topic">
-                互联网协议
+                Java
               </span>
             
           
@@ -203,11 +203,20 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../Java/" title="Java" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="Java" class="md-nav__link md-nav__link--active">
       Java
     </a>
+    
   </li>
 
     
@@ -251,20 +260,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="./" title="互联网协议" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../互联网协议/" title="互联网协议" class="md-nav__link">
       互联网协议
     </a>
-    
   </li>
 
     
@@ -464,13 +464,321 @@
               
                 
                 
-                <h1 id="_1">互联网协议</h1>
-<h1 id="tcpip">TCP/IP五层协议</h1>
-<p><img alt="五层协议" src="../assets/internet_five_layer.png" /></p>
-<h1 id="_2">实体层</h1>
-<p>把电脑连接起来的物理手段。它主要规定了网络的一些电气特性，作用是负责传送0和1的电信号。</p>
-<h1 id="_3">链路层</h1>
-<p>确定了0和1的分组方式</p>
+                <h1 id="java">Java</h1>
+<ul>
+<li>jdk 7 : 只能声明全局常量和抽象方法</li>
+</ul>
+<pre><code class="java">public interface Test1 {
+    public static final int var1 = 0;
+    public abstract void method1();
+}
+</code></pre>
+
+<ul>
+<li>jdk 8 : 可以声明静态方法和默认方法</li>
+</ul>
+<pre><code class="java">public interface Test1 {
+    public static final int var1 = 0;
+    public static void method2() {
+    }
+    default void method3() {
+    }
+}
+</code></pre>
+
+<ul>
+<li>jdk 9 : 可以声明私有方法</li>
+</ul>
+<pre><code class="java">public interface Test1 {
+    public static final int var1 = 0;
+    private void method4() {
+    }
+}
+</code></pre>
+
+<ul>
+<li>
+<p>接口可以继承接口，而且支持多重继承</p>
+</li>
+<li>
+<p>构造方法不能被重写，重写的前提是要有继承关系，每个类的类名都不相同，而构造器名称与类名相同，所以根本谈不上继承</p>
+</li>
+<li>
+<p>值相同，hashCode 一定相同；hashCode 相同，值可能不同</p>
+</li>
+<li>
+<p>对象的克隆</p>
+</li>
+<li>
+<p>通过实现 Cloneable 接口实现 clone：这里要注意深拷贝和浅拷贝问题，如果该类内部变量是引用类型的，并且内部变量类没有实现 Cloneable 接口，那么克隆出来的该变量是浅拷贝的（只是复制了引用，两个引用指向统一实例）</p>
+</li>
+<li>通过实现 Serializable 接口，通过对象的序列化和反序列化实现克隆。</li>
+</ul>
+<pre><code class="java">import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class MyUtil {
+
+    private MyUtil() {
+        throw new AssertionError();
+    }
+
+    // 说明：调用ByteArrayInputStream或ByteArrayOutputStream对象的close方法没有任何意义
+    // 这两个基于内存的流只要垃圾回收器清理对象就能够释放资源，这一点不同于对外部资源（如文件流）的释放
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public static &lt;T extends Serializable&gt; T clone(T obj) throws Exception {
+        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(bout);
+        oos.writeObject(obj);
+
+        ByteArrayInputStream bin = new ByteArrayInputStream(bout.toByteArray());
+        ObjectInputStream ois = new ObjectInputStream(bin);
+        return (T) ois.readObject();
+    }
+}
+</code></pre>
+
+<ul>
+<li>"=="与"equals()"的区别</li>
+<li>== :对于基本类型，比较的是他们的值；对于引用类型，比较的是引用的值，也就是对象实例的地址</li>
+<li>
+<p>equals()方法是Object类中的方法，默认实现是public boolean equals(Object obj) {return (this == obj);}；我们可以重写该方法达到我们的目的，例如String重写了该方法要求每个字符都相等。</p>
+</li>
+<li>
+<p>创建对象时构造器的调用顺序是： 父类静态初始化块 -&gt; 子类静态初始化块 -&gt; 父类初始化块 -&gt;调用了父类构造器 -&gt; 子类初始化块 -&gt; 调用子类的构造器</p>
+</li>
+</ul>
+<pre><code class="java">public class Dog {
+    static {
+        System.out.println(&quot;super static block&quot;);
+    }
+
+    {
+        System.out.println(&quot;super block&quot;);
+    }
+
+    public Dog() {
+        System.out.println(&quot;Dog&quot;);
+    }
+}
+
+public class Mastiff extends Dog {
+    static {
+        System.out.println(&quot;static block&quot;);
+    }
+
+    {
+        System.out.println(&quot;block&quot;);
+    }
+
+    public Mastiff() {
+        System.out.println(&quot;Mastiff&quot;);
+    }
+
+    public static void main(String[] args) {
+        Dog mastiff = new Mastiff();
+    }
+
+}   
+// 输出：
+// super staticblock
+// staticblock
+// superblock
+// Dog
+// block
+// Mastiff
+</code></pre>
+
+<ul>
+<li>
+<p>String：字符串产量，StringBuffer：字符串变量(线程安全)，StringBuilder：字符串变量（非线程安全）</p>
+</li>
+<li>
+<p>用transient关键字标记的成员变量不参与序列化过程</p>
+</li>
+<li>
+<p>跳出多重循环</p>
+</li>
+<li>使用带有标号的的break语句</li>
+</ul>
+<pre><code class="java">here:
+for (int i = 1; i &lt;= 4; i++) {
+    a1 = &quot;外层循环第&quot;+i+&quot;层&quot;;
+    for (int j = 1; j &lt;= 4; j++) {
+        b1 = &quot;内层循环第&quot;+j+&quot;层&quot;;
+        if (2 == j &amp; 2 == i) {
+            break here;
+        }
+    }
+}
+</code></pre>
+
+<ol>
+<li>外层的循环条件收到内层的代码控制限制</li>
+</ol>
+<pre><code class="java">Boolean state =  true;
+for (int i = 1; i &lt;= 4 &amp;&amp; state; i++) {
+    a2 = &quot;外层循环第&quot;+i+&quot;层&quot;;
+    for (int j = 1; j &lt;= 4 &amp;&amp; state; j++) {
+        b2 = &quot;内层循环第&quot;+j+&quot;层&quot;;
+        if (2 == j &amp; 2 == i) {
+            state = false;
+        }
+    }
+}
+</code></pre>
+
+<ol>
+<li>使用try/catch强制跳出循环</li>
+</ol>
+<pre><code class="java">try {
+    for (int i = 1; i &lt;= 3; i++) {
+        a3 = &quot;外层循环第&quot;+i+&quot;层&quot;;
+        for (int j = 1; j &lt;= 3; j++) {
+            b3 = &quot;内层循环第&quot;+j+&quot;层&quot;;
+            if (2 == j &amp; 2 == i) {
+                throw new Exception();
+            }
+        }
+    }
+} catch (Exception e) {
+    System.out.println(a3+b3);
+}
+</code></pre>
+
+<ul>
+<li>switch可作用的数据类型</li>
+<li>在Java 5以前，switch(expr)中，expr只能是byte、short、char、int</li>
+<li>Java 5开始，Java中引入了枚举类型，expr也可以是enum类型</li>
+<li>从Java 7开始，expr还可以是字符串（String）</li>
+<li>
+<p>long类型不支持</p>
+</li>
+<li>
+<p>finalize是Object类中的方法，垃圾回收器在垃圾回收时会调用该方法，我们可以在子类中重写该方法来做一些清理工作</p>
+</li>
+<li>
+<p>finally不执行的情况</p>
+</li>
+<li>调用了System.exit()方法</li>
+<li>
+<p>JVM崩溃了</p>
+</li>
+<li>
+<p>基本类型和包装类</p>
+</li>
+</ul>
+<p><a href="https://droidyue.com/blog/2015/04/07/autoboxing-and-autounboxing-in-java/">Java中的自动装箱与拆箱</a></p>
+<ol>
+<li>
+<p>自动装箱时编译器调用valueOf将原始类型值转换成对象，同时自动拆箱时，编译器通过调用类似intValue(),doubleValue()这类的方法将对象转换成原始类型值</p>
+</li>
+<li>
+<p>自动装箱主要发生在两种情况，一种是赋值时，另一种是在方法调用的时候</p>
+</li>
+</ol>
+<pre><code class="java">java5中引入了自动拆装箱功能，例如在比较时可以自动拆装箱
+class AutoUnboxingTest {
+
+    public static void main(String[] args) {
+        Integer a = new Integer(3);
+        Integer b = 3;                  // 将3自动装箱成Integer类型
+        int c = 3;
+        System.out.println(a == b);     // false 两个引用没有引用同一对象
+        System.out.println(a == c);     // true a自动拆箱成int类型再和c比较
+    }
+}
+
+自动装箱时，使用的时Integer的valueof方法，当int在-128到127之间时，并不会new一个新的对象，而是直接使用常量池中的Integer
+public class Test03 {
+
+    public static void main(String[] args) {
+        Integer f1 = 100, f2 = 100, f3 = 150, f4 = 150;
+
+        System.out.println(f1 == f2); //true
+        System.out.println(f3 == f4); //false
+    }
+}
+</code></pre>
+
+<ul>
+<li>
+<p>Java中默认声明的小数是double类型的，如double d=4.0。如果声明：float x = 4.0则会报错，需要如下写法：float x = 4.0f或者float x = (float)4.0</p>
+</li>
+<li>
+<p>short s1 = 1; s1 = s1 + 1;有错吗?short s1 = 1; s1 += 1;有错吗？</p>
+</li>
+</ul>
+<p>对于short s1 = 1; s1 = s1 + 1;由于1是int类型，因此s1+1运算结果也是int 型，需要强制转换类型才能赋值给short型。
+short s1 = 1; s1 += 1;可以正确编译，因为s1+= 1;相当于s1 = (short)(s1 + 1);其中有隐含的强制类型转换。</p>
+<ul>
+<li>String中的字符串常量池</li>
+</ul>
+<p><a href="https://droidyue.com/blog/2014/12/21/string-literal-pool-in-java/">Java中的字符串常量池</a></p>
+<p>使用new创建的字符串对象，如果想将这个对象的引用加入到字符串常量池，可以使用intern方法。调用intern后，首先检查字符串常量池中是否有该对象的引用，如果存在，则将这个引用返回给变量，否则将引用加入并返回给变量。</p>
+<ul>
+<li>
+<p>强引用，软引用（SoftReference），弱引用（WeakReference），虚引用</p>
+</li>
+<li>
+<p>强引用: 通常我们使用new操作符创建一个对象时所返回的引用即为强引用</p>
+</li>
+<li>软引用: 若一个对象只能通过软引用到达，那么这个对象在内存不足时会被回收</li>
+<li>弱引用: 若一个对象只能通过弱引用到达，那么它就会被回收（即使内存充足）</li>
+<li>
+<p>虚引用: 虚引用是Java中最“弱”的引用，虚引用并不会决定对象的生命周期。如果一个对象仅持有虚引用，那么它就和没有任何引用一样，在任何时候都可能被垃圾回收器回收。</p>
+</li>
+<li>
+<p>并发：在一个时间段内同时执行多件事，并行：在一个时刻同时执行多件事</p>
+</li>
+<li>
+<p>字节流不使用缓冲区，字符流使用缓冲区</p>
+</li>
+<li>
+<p>IO面向流，NIO面向缓冲区；IO是阻塞的，NIO是非阻塞的</p>
+</li>
+<li>
+<p>for-each 实际上是通过迭代器（Iterator）实现的</p>
+</li>
+<li>
+<p>设计模式三大类：创建型[对类的实例化过程的抽象化]、结构型[描述如何将类或对象结合在一起形成更大的结构]、行为型[对在不同的对象之间划分责任和算法的抽象化]</p>
+</li>
+<li>
+<p>Math.ceil(x)：对一个数进行向上取整；返回大于或等于x，并且与之最接近的整数；如果x是正数，则把小数“入”；如果x是负数，则把小数“舍”</p>
+</li>
+</ul>
+<pre><code class="java">Math.ceil(1.2) //2
+Math.ceil(1.8) //2
+Math.ceil(-1.2) //-1
+Math.ceil(-1.8) //-1
+</code></pre>
+
+<ul>
+<li>Math.floor(x)：对一个数进行向下取整；返回小于或等于x，并且与之最接近的整数；如果x是正数，则把小数“舍”；如果x是负数，则把小数“入”</li>
+</ul>
+<pre><code class="java">Math.floor(1.2) //1
+Math.floor(1.8) //1
+Math.floor(-1.2) //-2
+Math.floor(-1.8) //-2
+</code></pre>
+
+<ul>
+<li>Math.round(x)：<strong>四舍五入</strong>取整；与x最接近的整数</li>
+</ul>
+<pre><code class="java">Math.round(1.2) //1
+Math.round(1.8) //2
+Math.round(-1.2) //-1
+Math.round(-1.8) //-2
+Math.round(1.5) //2
+Math.round(-1.5) //-1 (5舍6入)
+</code></pre>
+
+<ul>
+<li>2 &lt;&lt; 3（左移n位相当于乘以2的n次方，右移n位相当于除以2的n次方)</li>
+</ul>
                 
                   
                 
@@ -491,7 +799,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../UML类图/" title="UML类图" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../EventBus3/" title="EventBus 3总结" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -500,19 +808,19 @@
                 <span class="md-footer-nav__direction">
                   后退
                 </span>
-                UML类图
+                EventBus 3总结
               </span>
             </div>
           </a>
         
         
-          <a href="../常用shell命令/" title="常用shell命令" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../Java线程&进程/" title="线程" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   前进
                 </span>
-                常用shell命令
+                线程
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

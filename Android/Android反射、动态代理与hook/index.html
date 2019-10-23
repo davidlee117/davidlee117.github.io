@@ -205,6 +205,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../Java/" title="Java" class="md-nav__link">
+      Java
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../../Java线程&进程/" title="线程" class="md-nav__link">
       线程
     </a>
@@ -265,6 +277,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../经验总结/" title="经验总结" class="md-nav__link">
+      经验总结
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../../编程范式/" title="编程范式" class="md-nav__link">
       编程范式
     </a>
@@ -292,13 +316,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13" checked>
     
-    <label class="md-nav__link" for="nav-11">
+    <label class="md-nav__link" for="nav-13">
       Android
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-11">
+      <label class="md-nav__title" for="nav-13">
         Android
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -438,6 +462,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../Android权限/" title="Android权限" class="md-nav__link">
+      Android权限
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../自定义View/" title="自定义View" class="md-nav__link">
       自定义View
     </a>
@@ -456,13 +492,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-14" type="checkbox" id="nav-14">
     
-    <label class="md-nav__link" for="nav-12">
+    <label class="md-nav__link" for="nav-14">
       SpringBoot
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-12">
+      <label class="md-nav__title" for="nav-14">
         SpringBoot
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -641,7 +677,7 @@ button.setOnClickListener((View.OnClickListener)onClickListener);
 <p>开发接入</p>
 </li>
 <li>
-<p>使用gradle添加到工程</p>
+<p>使用gradle添加到module工程中</p>
 </li>
 </ol>
 <pre><code class="gradle">compileOnly 'de.robv.android.xposed:api:82'
@@ -652,7 +688,8 @@ compileOnly 'de.robv.android.xposed:api:82:sources'
 <ul>
 <li>配置Manifest.xml</li>
 </ul>
-<pre><code class="xml">&lt;meta-data
+<pre><code class="xml">//在application标签中添加
+&lt;meta-data
     android:name=&quot;xposedmodule&quot;
     android:value=&quot;true&quot; /&gt;
 &lt;meta-data
@@ -661,6 +698,17 @@ compileOnly 'de.robv.android.xposed:api:82:sources'
 &lt;meta-data
     android:name=&quot;xposedminversion&quot;
     android:value=&quot;53&quot; /&gt;
+</code></pre>
+
+<ul>
+<li>代码入口类</li>
+</ul>
+<pre><code class="java">public class Main implements IXposedHookLoadPackage{
+    @Override
+    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) {
+        //当应用打开时回调
+    }
+}
 </code></pre>
 
 <ul>
@@ -735,13 +783,13 @@ hook Activity</li>
           </a>
         
         
-          <a href="../自定义View/" title="自定义View" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../Android权限/" title="Android权限" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   前进
                 </span>
-                自定义View
+                Android权限
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

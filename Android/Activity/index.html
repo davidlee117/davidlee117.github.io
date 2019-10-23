@@ -205,6 +205,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../Java/" title="Java" class="md-nav__link">
+      Java
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../../Java线程&进程/" title="线程" class="md-nav__link">
       线程
     </a>
@@ -265,6 +277,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../经验总结/" title="经验总结" class="md-nav__link">
+      经验总结
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../../编程范式/" title="编程范式" class="md-nav__link">
       编程范式
     </a>
@@ -292,13 +316,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13" checked>
     
-    <label class="md-nav__link" for="nav-11">
+    <label class="md-nav__link" for="nav-13">
       Android
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-11">
+      <label class="md-nav__title" for="nav-13">
         Android
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -351,6 +375,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#uses-permission-androidmaxsdkversion" title="uses-permission 与 android:maxSdkVersion" class="md-nav__link">
+    uses-permission 与 android:maxSdkVersion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_3" title="参考" class="md-nav__link">
     参考
   </a>
@@ -398,6 +429,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../Android权限/" title="Android权限" class="md-nav__link">
+      Android权限
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../自定义View/" title="自定义View" class="md-nav__link">
       自定义View
     </a>
@@ -416,13 +459,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-14" type="checkbox" id="nav-14">
     
-    <label class="md-nav__link" for="nav-12">
+    <label class="md-nav__link" for="nav-14">
       SpringBoot
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-12">
+      <label class="md-nav__title" for="nav-14">
         SpringBoot
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -475,6 +518,13 @@
         <li class="md-nav__item">
   <a href="#_2" title="启动模式" class="md-nav__link">
     启动模式
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uses-permission-androidmaxsdkversion" title="uses-permission 与 android:maxSdkVersion" class="md-nav__link">
+    uses-permission 与 android:maxSdkVersion
   </a>
   
 </li>
@@ -581,6 +631,15 @@
 </ol>
 <p>流程分析：
 <img alt="activity 分析" src="../../assets/android-activity-0.png" /></p>
+<h2 id="uses-permission-androidmaxsdkversion">uses-permission 与 android:maxSdkVersion</h2>
+<pre><code class="xml">&lt;uses-permission
+        android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;
+        android:maxSdkVersion=&quot;21&quot; 
+/&gt;
+</code></pre>
+
+<p>android:maxSdkVersion
+表示需要此项权限的最高的系统API Levle，例如设置android:maxSdkVersion为21，它表示这项权限只在API Level 21（Android5.0）及以下的系统中需要使用。对API Level21以上的系统中不需要使用这项权限。部分手机在设置了android:maxSdkVersion获取不到对应的权限。</p>
 <h2 id="_3">参考</h2>
 <p>《Android开发艺术探索》</p>
                 
