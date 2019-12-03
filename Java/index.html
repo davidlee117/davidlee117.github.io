@@ -226,6 +226,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../JavaScript/" title="JavaScript" class="md-nav__link">
+      JavaScript
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../Java线程&进程/" title="线程" class="md-nav__link">
       线程
     </a>
@@ -240,6 +252,18 @@
   <li class="md-nav__item">
     <a href="../MacOS/" title="MacOS操作总结" class="md-nav__link">
       MacOS操作总结
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../MySQL/" title="MySQL" class="md-nav__link">
+      MySQL
     </a>
   </li>
 
@@ -323,13 +347,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-15" type="checkbox" id="nav-15">
     
-    <label class="md-nav__link" for="nav-13">
+    <label class="md-nav__link" for="nav-15">
       Android
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-13">
+      <label class="md-nav__title" for="nav-15">
         Android
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -389,6 +413,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../Android/动画/" title="动画" class="md-nav__link">
+      动画
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../Android/自定义View/" title="自定义View" class="md-nav__link">
       自定义View
     </a>
@@ -407,13 +443,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-14" type="checkbox" id="nav-14">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-16" type="checkbox" id="nav-16">
     
-    <label class="md-nav__link" for="nav-14">
+    <label class="md-nav__link" for="nav-16">
       SpringBoot
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-14">
+      <label class="md-nav__title" for="nav-16">
         SpringBoot
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -777,8 +813,125 @@ Math.round(-1.5) //-1 (5舍6入)
 </code></pre>
 
 <ul>
-<li>2 &lt;&lt; 3（左移n位相当于乘以2的n次方，右移n位相当于除以2的n次方)</li>
+<li>
+<p>2 &lt;&lt; 3（左移n位相当于乘以2的n次方，右移n位相当于除以2的n次方)</p>
+</li>
+<li>
+<p>try、catch、finally带return的执行顺序</p>
+</li>
+<li>try中带有return（返回基本数据类型）</li>
 </ul>
+<pre><code class="java">private int testReturn1() {
+    int i = 1;
+    try {
+        i++;
+        System.out.println(&quot;try:&quot; + i);
+        return i;
+    } catch (Exception e) {
+        i++;
+        System.out.println(&quot;catch:&quot; + i);
+    } finally {
+        i++;
+        System.out.println(&quot;finally:&quot; + i);
+    }
+    return i;
+}
+</code></pre>
+
+<p>输出：</p>
+<pre><code>try:2
+finally:3
+2
+</code></pre>
+
+<p>先执行return前的代码，然后临时保存需要return的数据，再执行finally中的代码，最后通过return返回之前的数据。</p>
+<ol>
+<li>try中带有return（返回引用数据类型）</li>
+</ol>
+<pre><code class="java">private List&lt;Integer&gt; testReturn2() {
+    List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+    try {
+        list.add(1);
+        System.out.println(&quot;try:&quot; + list);
+        return list;
+    } catch (Exception e) {
+        list.add(2);
+        System.out.println(&quot;catch:&quot; + list);
+    } finally {
+        list.add(3);
+        System.out.println(&quot;finally:&quot; + list);
+    }
+    return list;
+}
+</code></pre>
+
+<p>输出：</p>
+<pre><code>try:[1]
+finally:[1, 3]
+[1, 3]
+</code></pre>
+
+<p>list里存的不是变量本身，而是变量的地址，所以当finally通过地址改变了变量，会影响到返回值。</p>
+<ol>
+<li>catch中带有return</li>
+</ol>
+<pre><code class="java">private int testReturn3() {
+    int i = 1;
+    try {
+        i++;
+        System.out.println(&quot;try:&quot; + i);
+        int x = i / 0;
+    } catch (Exception e) {
+        i++;
+        System.out.println(&quot;catch:&quot; + i);
+        return i;
+    } finally {
+        i++;
+        System.out.println(&quot;finally:&quot; + i);
+    }
+    return i;
+}
+</code></pre>
+
+<p>输出：</p>
+<pre><code>try:2
+catch:3
+finally:4
+3
+</code></pre>
+
+<ol>
+<li>finally中带有return</li>
+</ol>
+<pre><code class="java">private int testReturn4() {
+    int i = 1;
+    try {
+        i++;
+        System.out.println(&quot;try:&quot; + i);
+        return i;
+    } catch (Exception e) {
+        i++;
+        System.out.println(&quot;catch:&quot; + i);
+        return i;
+    } finally {
+        i++;
+        System.out.println(&quot;finally:&quot; + i);
+        return i;
+    }
+}
+</code></pre>
+
+<p>输出：</p>
+<pre><code>try:2
+finally:3
+3
+</code></pre>
+
+<p>当finally中有return的时候，try中的return会失效，在执行完finally的return之后，就不会再执行try中的return。这种写法，编译是可以编译通过的，但是编译器会给予警告，所以不推荐在finally中写return，这会破坏程序的完整性。</p>
+<p><strong>总结：</strong><br>
+1、finally中的代码总会被执行。<br>
+2、当try、catch中有return时，也会执行finally。return的时候，要注意返回值的类型，是否受到finally中代码的影响。<br>
+3、finally中有return时，会直接在finally中退出，导致try、catch中的return失效。<br></p>
                 
                   
                 
@@ -814,13 +967,13 @@ Math.round(-1.5) //-1 (5舍6入)
           </a>
         
         
-          <a href="../Java线程&进程/" title="线程" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../JavaScript/" title="JavaScript" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   前进
                 </span>
-                线程
+                JavaScript
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
