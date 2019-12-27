@@ -367,6 +367,41 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_9" title="查看某文件夹下文件和文件夹的个数" class="md-nav__link">
+    查看某文件夹下文件和文件夹的个数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" title="查看某文件夹下文件的个数" class="md-nav__link">
+    查看某文件夹下文件的个数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" title="查看某文件夹下文件夹的个数" class="md-nav__link">
+    查看某文件夹下文件夹的个数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" title="查看某文件夹下文件的个数，包括子文件夹里的:" class="md-nav__link">
+    查看某文件夹下文件的个数，包括子文件夹里的:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" title="查看某文件夹下文件夹的个数，包括子文件夹里的:" class="md-nav__link">
+    查看某文件夹下文件夹的个数，包括子文件夹里的:
+  </a>
+  
+</li>
+      
       
       
       
@@ -499,6 +534,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../Android/系统定制/" title="系统定制" class="md-nav__link">
+      系统定制
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../Android/自定义View/" title="自定义View" class="md-nav__link">
       自定义View
     </a>
@@ -620,6 +667,41 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_9" title="查看某文件夹下文件和文件夹的个数" class="md-nav__link">
+    查看某文件夹下文件和文件夹的个数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" title="查看某文件夹下文件的个数" class="md-nav__link">
+    查看某文件夹下文件的个数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" title="查看某文件夹下文件夹的个数" class="md-nav__link">
+    查看某文件夹下文件夹的个数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" title="查看某文件夹下文件的个数，包括子文件夹里的:" class="md-nav__link">
+    查看某文件夹下文件的个数，包括子文件夹里的:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" title="查看某文件夹下文件夹的个数，包括子文件夹里的:" class="md-nav__link">
+    查看某文件夹下文件夹的个数，包括子文件夹里的:
+  </a>
+  
+</li>
+      
       
       
       
@@ -685,6 +767,23 @@ screen -wipe
 <h3 id="_8">查看端口信息</h3>
 <pre><code class="shell">netstat -ntlp|grep 8888
 </code></pre>
+
+<h3 id="_9">查看某文件夹下文件和文件夹的个数</h3>
+<pre><code class="shell">ls -l |wc -l
+</code></pre>
+
+<h3 id="_10">查看某文件夹下文件的个数</h3>
+<pre><code class="shell">ls -l |grep &quot;^-&quot;|wc -l
+</code></pre>
+
+<h3 id="_11">查看某文件夹下文件夹的个数</h3>
+<pre><code class="shell">ls -l |grep &quot;^d&quot;|wc -l
+</code></pre>
+
+<h3 id="_12">查看某文件夹下文件的个数，包括子文件夹里的:</h3>
+<p>ls -lR|grep "^-"|wc -l</p>
+<h3 id="_13">查看某文件夹下文件夹的个数，包括子文件夹里的:</h3>
+<p>ls -lR|grep "^d"|wc -l</p>
                 
                   
                 
