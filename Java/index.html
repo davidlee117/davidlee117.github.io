@@ -203,6 +203,18 @@
       
       
 
+
+  <li class="md-nav__item">
+    <a href="../Https/" title="Https" class="md-nav__link">
+      Https
+    </a>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
@@ -310,6 +322,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../杂项/" title="杂项" class="md-nav__link">
+      杂项
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../经验总结/" title="经验总结" class="md-nav__link">
       经验总结
     </a>
@@ -347,13 +371,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-15" type="checkbox" id="nav-15">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-17" type="checkbox" id="nav-17">
     
-    <label class="md-nav__link" for="nav-15">
+    <label class="md-nav__link" for="nav-17">
       Android
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-15">
+      <label class="md-nav__title" for="nav-17">
         Android
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -455,13 +479,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-16" type="checkbox" id="nav-16">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-18" type="checkbox" id="nav-18">
     
-    <label class="md-nav__link" for="nav-16">
+    <label class="md-nav__link" for="nav-18">
       SpringBoot
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-16">
+      <label class="md-nav__title" for="nav-18">
         SpringBoot
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -944,6 +968,68 @@ finally:3
 1、finally中的代码总会被执行。<br>
 2、当try、catch中有return时，也会执行finally。return的时候，要注意返回值的类型，是否受到finally中代码的影响。<br>
 3、finally中有return时，会直接在finally中退出，导致try、catch中的return失效。<br></p>
+<ul>
+<li>
+<p>代理</p>
+</li>
+<li>
+<p>系统代理</p>
+</li>
+</ul>
+<pre><code class="java">// HTTP 代理，只能代理 HTTP 请求
+System.setProperty(&quot;http.proxyHost&quot;, &quot;127.0.0.1&quot;);
+System.setProperty(&quot;http.proxyPort&quot;, &quot;1086&quot;);
+
+// HTTPS 代理，只能代理 HTTPS 请求
+System.setProperty(&quot;https.proxyHost&quot;, &quot;127.0.0.1&quot;);
+System.setProperty(&quot;https.proxyPort&quot;, &quot;1086&quot;);
+
+// FTP 代理，只能代理 FTP 请求
+System.setProperty(&quot;ftp.proxyHost&quot;, &quot;127.0.0.1&quot;);
+System.setProperty(&quot;ftp.proxyPort&quot;, &quot;1086&quot;);
+
+// SOCKS 代理，支持 HTTP 和 HTTPS 请求
+// 注意：如果设置了 SOCKS 代理就不要设 HTTP/HTTPS 代理
+System.setProperty(&quot;socksProxyHost&quot;, &quot;127.0.0.1&quot;);
+System.setProperty(&quot;socksProxyPort&quot;, &quot;1086&quot;);
+
+// 同时支持代理 HTTP/HTTPS 请求
+System.setProperty(&quot;proxyHost&quot;, &quot;127.0.0.1&quot;);
+System.setProperty(&quot;proxyPort&quot;, &quot;1086&quot;);
+
+// 不使用代理的主机列表，多个地址用|分隔，可以使用*通配符
+System.setProperty(&quot;http.nonProxyHosts&quot;, &quot;localhost|192.168.0.*&quot;););
+
+// 用完之后，取消设置
+System.clearProperty(&quot;http.proxyHost&quot;);
+</code></pre>
+
+<ol>
+<li>JVM 命令行参数<br>
+在系统启动时，使用-D项来设置代理，如：java -DproxyHost=127.0.0.1 -DproxyPort=1086</li>
+</ol>
+<pre><code>// http代理  
+-Dhttp.proxyHost=127.0.0.1
+-Dhttp.proxyPort=1086
+
+// https代理
+-Dhttps.proxyHost=127.0.0.1
+-Dhttps.proxyPort=1086
+
+// socks代理
+-DsocksProxyHost=127.0.0.1
+-DsocksProxyPort=1086
+
+// 同事支持http和https
+-DproxyHost=127.0.0.1
+-DproxyPort=1086
+
+// 使用系统代理
+-Djava.net.useSystemProxies=true
+
+// 不使用代理的主机列表，多个地址用|分隔，可以使用*通配符
+-Dhttp.nonProxyHosts=&quot;localhost|127.0.0.1|192.168.*&quot;
+</code></pre>
                 
                   
                 
@@ -964,7 +1050,7 @@ finally:3
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../EventBus3/" title="EventBus 3总结" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../Https/" title="Https" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -973,7 +1059,7 @@ finally:3
                 <span class="md-footer-nav__direction">
                   后退
                 </span>
-                EventBus 3总结
+                Https
               </span>
             </div>
           </a>
